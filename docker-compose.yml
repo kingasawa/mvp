@@ -1,0 +1,18 @@
+version: '2'
+services:
+  postgres:
+    image: "postgres"
+    environment:
+      - POSTGRES_HOST=localhost
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5435:5432"
+    restart: always
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379"
+    restart: always
