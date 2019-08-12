@@ -17,12 +17,9 @@ const facebooVerifyHandler = (req, token, tokenSecret, profile, done) => {
       if (err) {
         return done(null, null);
       }
+      const { id, first_name, last_name, email, gender } = response.body
       const data = {
-        id: response.body.id,
-        first_name: response.body.first_name,  //jshint ignore:line
-        last_name: response.body.last_name,    //jshint ignore:line
-        email: response.body.email,
-        gender: response.body.gender
+        id, first_name, last_name, email, gender
       };
 
       return done(null, data);
@@ -32,12 +29,12 @@ const facebooVerifyHandler = (req, token, tokenSecret, profile, done) => {
 
 const googleVerifyHandler = function (accessToken, refreshToken, profile, cb, done) {
 
-  console.log('cb', cb);
+  const { id, displayName, emails } = cb
   const data = {
-    id: cb.id,
-    name: cb.displayName,
-    email: cb.emails[0].value,
-    emailVerified: cb.emails[0].verified
+    id,
+    name: displayName,
+    email: emails[0].value,
+    emailVerified: emails[0].verified
   };
 
   return done(null, data);
