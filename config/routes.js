@@ -23,7 +23,8 @@ module.exports.routes = {
   'POST /auth/login': 'AuthController.login',
   'GET /logout': 'AuthController.logout',
   'POST /auth/register': 'AuthController.register',
-  'GET /auth/facebook/callback': 'AuthController.facebookCallback'
+  'GET /auth/facebook/callback': 'AuthController.facebookCallback',
+  'GET /auth/google/callback': 'AuthController.googleCallback'
 
 
   /***************************************************************************

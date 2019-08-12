@@ -1,6 +1,10 @@
 const passport = require('passport')
 
 module.exports = {
+  index: async (req, res) => {
+    console.log('sails.config', sails.config);
+  },
+
   login: async(req, res) => {
     passport.authenticate('local', (err, user, info) => {
       if((err) || (!user)) {
@@ -12,6 +16,7 @@ module.exports = {
       req.logIn(user, (err) => {
         if(err) res.send(err);
         req.session.user = user;
+        console.log('isAuthenticated', req.isAuthenticated());
         return res.send({
           message: info.message,
           user
@@ -34,7 +39,6 @@ module.exports = {
   },
 
   facebook: async (req, res, next) => {
-    console.log('facebook login');
     passport.authenticate('facebook')(req, res, next)
   },
 
@@ -47,7 +51,6 @@ module.exports = {
   register: async(req, res) => {
     let registerData = req.allParams()
     User.createAccount(registerData).then((register)=>{
-      console.log('controller userRegister', register);
       res.json(register);
     })
   },

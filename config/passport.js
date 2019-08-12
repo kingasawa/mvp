@@ -1,22 +1,22 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-// const GoogleStrategy = require('passport-google').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt-nodejs');
 const request = require('request');
+const { custom } = require('./custom.js');
+
+const { facebookGraphUrl, baseUrl, GOOGLE_CLIENT_KEY, GOOGLE_SECRET_KEY, FACEBOOK_CLIENT_KEY, FACEBOOK_SECRET_KEY } = custom
 
 const facebooVerifyHandler = (req, token, tokenSecret, profile, done) => {
-
   process.nextTick(() => {
-    const url = `https://graph.facebook.com/v2.4/me?access_token=${token}&fields=id,name,email,first_name,last_name,gender`;
+    const url = `${facebookGraphUrl}/me?access_token=${token}&fields=id,name,email,first_name,last_name,gender`;
 
     const options = {method: 'GET', url: url, json: true};
     request(options, (err, response) => {
       if (err) {
         return done(null, null);
       }
-
-      console.log('response', response);
       const data = {
         id: response.body.id,
         first_name: response.body.first_name,  //jshint ignore:line
@@ -28,6 +28,19 @@ const facebooVerifyHandler = (req, token, tokenSecret, profile, done) => {
       return done(null, data);
     });
   });
+};
+
+const googleVerifyHandler = function (accessToken, refreshToken, profile, cb, done) {
+
+  console.log('cb', cb);
+  const data = {
+    id: cb.id,
+    name: cb.displayName,
+    email: cb.emails[0].value,
+    emailVerified: cb.emails[0].verified
+  };
+
+  return done(null, data);
 };
 
 passport.serializeUser((user, cb) => {
@@ -61,8 +74,15 @@ passport.use(new LocalStrategy({
 )
 
 passport.use(new FacebookStrategy({
-  clientID: '2294849067431963',
-  clientSecret: 'a039601d5ed54717d54896481c7fea6a',
-  callbackURL: 'http://localhost:1337/auth/facebook/callback',
+  clientID: FACEBOOK_CLIENT_KEY,
+  clientSecret: FACEBOOK_SECRET_KEY,
+  callbackURL: `${baseUrl}/auth/facebook/callback`,
   passReqToCallback: true
 }, facebooVerifyHandler));
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_KEY,
+  clientSecret: GOOGLE_SECRET_KEY,
+  callbackURL: `${baseUrl}/auth/google/callback`,
+  passReqToCallback: true
+}, googleVerifyHandler));

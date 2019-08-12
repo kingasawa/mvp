@@ -17,6 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  'user/*': 'passportAuthenticated',
+  '*': true,
 
 };

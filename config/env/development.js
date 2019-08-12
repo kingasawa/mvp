@@ -229,25 +229,10 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      secure: true,
+      // secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
-      domain: '.goappable.com',
-    },
-
-    secret: '68ad65e11ba8b33d888942654d173a0a',
-    name: 'mvp.sid',
-    // eslint-disable-next-line no-dupe-keys
-    // cookie: {
-    //   domain: '.goappable.com',
-    //   // Path: ''
-    // },
-    // start redis conf
-    adapter: '@sailshq/connect-redis',
-    host: 'localhost',
-    port: '6380',
-    // pass: '',
-    // db: '',
-    // end redis conf
+      // domain: '.goappable.com',
+    }
 
   },
 
@@ -395,8 +380,13 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com',
+    // baseUrl: 'http://localhost:1337',
+    // facebookGraphUrl: 'https://graph.facebook.com/v2.4',
+    // internalEmailAddress: 'kingasawa@gmail.com',
+    // GOOGLE_CLIENT_KEY: '435096999931-ohpv9v3e99taqerbm6p9hc6uond6lpbg.apps.googleusercontent.com',
+    // GOOGLE_SECRET_KEY: 'TnYbboiLVr0s2I9gvk0yT8vt',
+    // FACEBOOK_CLIENT_KEY: '2294849067431963',
+    // FACEBOOK_SECRET_KEY: 'a039601d5ed54717d54896481c7fea6a',
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',

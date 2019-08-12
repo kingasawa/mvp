@@ -19,7 +19,16 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
   secret: '32d8cb4e5b1e40c107865d58f05692ec',
-
+  name: 'mvp.sid',
+  cookie: {
+    domain: 'localhost',
+  },
+  adapter: '@sailshq/connect-redis',
+  host: 'localhost',
+  port: '6380',
+  // pass: '',
+  // db: '',
+  // end redis conf
 
   /***************************************************************************
   *                                                                          *
